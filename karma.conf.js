@@ -32,10 +32,10 @@ module.exports = function(config) {
             'grails-app/assets/bower_components/angular-mocks/angular-mocks.js',
 
             // Fixtures from Backend
-            'test/js/**/*.fixture.js',
+            'test/js-fixtures/**/*.js',
 
             // Tests
-            'test/js/**/*.!(fixture.)js'
+            'test/js/**/*.js'
         ],
 
         plugins: [

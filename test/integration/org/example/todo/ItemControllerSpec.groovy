@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse
 class ItemControllerSpec extends IntegrationSpec {
 
     ItemController controller = new ItemController()
+    // use ../project-name trick as you can be in target dir
+    JsonRecorder rec = JsonRecorder.create('../earls-list/test/js-fixtures/earlslist', 'item')
 
     def setup() {
         17.times {
@@ -27,7 +29,7 @@ class ItemControllerSpec extends IntegrationSpec {
         when:
         controller.index(10)
 
-        def result = controller.response.json
+        def result = rec << 'list' << controller.response.json
 
         then:
         result?.size() == 10
@@ -36,11 +38,11 @@ class ItemControllerSpec extends IntegrationSpec {
 
     void "create new item"() {
         when:
-        controller.request.json = [description: 'Write more tests!']
+        controller.request.json = rec << 'validSaveInput' << [description: 'Write more tests!']
         controller.request.method = 'POST'
         controller.save()
 
-        def result = controller.response.json
+        def result = rec << 'validSave' << controller.response.json
 
         then:
         result
@@ -50,11 +52,11 @@ class ItemControllerSpec extends IntegrationSpec {
 
     void "fail to create invalid item"() {
         when:
-        controller.request.json = [description: 'x' * 256]
+        controller.request.json = rec << 'invalidSaveInput' << [description: 'x' * 256]
         controller.request.method = 'POST'
         controller.save()
 
-        def result = controller.response.json
+        def result = rec << 'invalidSave' << controller.response.json
 
         then:
         result
@@ -66,11 +68,11 @@ class ItemControllerSpec extends IntegrationSpec {
     void "update existing item"() {
         when:
         controller.params.id = Item.findByDescription('Item #10').id
-        controller.request.json = [description: 'Write even more tests!', crossed: true]
+        controller.request.json = rec << 'updateValidInput' << [description: 'Write even more tests!', crossed: true]
         controller.request.method = 'PUT'
         controller.update()
 
-        def result = controller.response.json
+        def result = rec << 'updateValid' << controller.response.json
 
         then:
         result
@@ -82,11 +84,11 @@ class ItemControllerSpec extends IntegrationSpec {
     void "fail to update existing item"() {
         when:
         controller.params.id = Item.findByDescription('Item #11').id
-        controller.request.json = [description: 'x' * 256, crossed: true]
+        controller.request.json = rec << 'updateInvalidInput' << [description: 'x' * 256, crossed: true]
         controller.request.method = 'PUT'
         controller.update()
 
-        def result = controller.response.json
+        def result = rec << 'updateInvalid' << controller.response.json
 
         then:
         result
