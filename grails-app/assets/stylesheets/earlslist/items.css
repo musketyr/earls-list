@@ -1,0 +1,16 @@
+/*
+ *= require bootstrap/dist/css/bootstrap
+ *= require bootstrap/dist/css/bootstrap-theme
+ */
+
+body {
+    padding-top: 20px;
+}
+
+.item:not(:hover) .remove-item {
+    display: none;
+}
+
+.crossed {
+    text-decoration: line-through;
+}

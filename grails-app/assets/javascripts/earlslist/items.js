@@ -1,10 +1,44 @@
-angular.module('earlslist.items', []).value('apiRoot', '').factory('items', function($http, $q, apiRoot){
+angular.module('earlslist.items', ['earlslist.apiRoot']).factory('items', function($http, $q, apiRoot){
 
-    var items, unwrapOrReject, enhance, enhanceItem;
+    var items, unwrapOrReject, enhanceAll, enhanceItem;
+
+    unwrapOrReject = function(response){
+        if (response.data) {
+            if (response.data.errors) {
+                return $q.reject(response.data)
+            }
+            return response.data
+        }
+        return response
+    };
+
+    enhanceItem = function(item) {
+        var updateItem = function(self) {
+            return function(updated) {
+                angular.extend(self, updated);
+                return self;
+            }
+        };
+
+        item.remove = function() { return items.remove(item) };
+        item.update = function() { return items.update(item).then(updateItem(this)) };
+        item.cross  = function() {
+            return items.update({id: item.id, crossed: true}).then(updateItem(this));
+        };
+        item.redo   = function() {
+            return items.update({id: item.id, crossed: false}).then(updateItem(this));
+        };
+        return item;
+    };
+
+    enhanceAll = function(listOfItems) {
+        angular.forEach(listOfItems, enhanceItem);
+        return listOfItems;
+    };
 
     items = {
         list: function(start) {
-            return $http({url: apiRoot + "/item/", method: 'GET', params: start ? {offset: start } : {}}).then(unwrapOrReject).then(enhance);
+            return $http({url: apiRoot + "/item/", method: 'GET', params: start ? {offset: start } : {}}).then(unwrapOrReject).then(enhanceAll);
         },
         save: function(data) {
             return $http({url: apiRoot + "/item/", method: 'POST', data: data}).then(unwrapOrReject).then(enhanceItem);
@@ -20,40 +54,11 @@ angular.module('earlslist.items', []).value('apiRoot', '').factory('items', func
                 throw "Id not set for " + data + "!"
             }
             return $http({url: apiRoot + "/item/" + data.id, method: 'DELETE'}).then(unwrapOrReject);
+        },
+        enhance: {
+            item: enhanceItem,
+            list: enhanceAll
         }
-    };
-
-    unwrapOrReject = function(response){
-        if (response.data) {
-            if (response.data.errors) {
-                return $q.reject(response.data)
-            }
-            return response.data
-        }
-        return response
-    };
-
-    enhanceItem = function(item) {
-        var updateItem = function(updated) {
-            angular.extend(item, updated)
-        };
-
-        item.remove = function() { return items.remove(item) };
-        item.update = function() { return items.update(item).then(updateItem) };
-        item.cross  = function() {
-            item.crossed = true;
-            return items.update(item).then(updateItem)
-        };
-        item.redo   = function() {
-            item.crossed = false;
-            return items.update(item).then(updateItem)
-        };
-        return item;
-    };
-
-    enhance = function(listOfItems) {
-        angular.forEach(listOfItems, enhanceItem);
-        return listOfItems;
     };
 
     return items;

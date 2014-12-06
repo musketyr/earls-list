@@ -1,3 +1,5 @@
+angular.module('earlslist.apiRoot', []).value('apiRoot', '');
+
 describe('List service should provide basic functionality', function(){
     beforeEach(module('earlslist.items'));
 

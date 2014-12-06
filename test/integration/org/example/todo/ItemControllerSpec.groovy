@@ -78,7 +78,20 @@ class ItemControllerSpec extends IntegrationSpec {
         result
         result.description == 'Write even more tests!'
         result.crossed == true
+    }
 
+    void "redo existing item"() {
+        when:
+        controller.params.id = Item.findByDescription('Item #3').id
+        controller.request.json = rec << 'redoInput' << [crossed: false]
+        controller.request.method = 'PUT'
+        controller.update()
+
+        def result = rec << 'redo' << controller.response.json
+
+        then:
+        result
+        result.crossed == false
     }
 
     void "fail to update existing item"() {

@@ -15,8 +15,14 @@ class Item {
      */
     Boolean crossed = Boolean.FALSE
 
+    Date dateCreated = new Date()
+
     static constraints = {
         // always set max. size for String fields otherwise database defaults applies causing runtime errors
         description size: 1..255
+    }
+
+    static mapping = {
+        sort dateCreated: "desc"
     }
 }
