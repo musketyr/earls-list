@@ -5,6 +5,7 @@ node_js:
   - "0.10"
 before_install:
   - "npm install"
+  - "bower install"
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-script: ./grailsw refresh-dependencies && ./grailsw test-app && ./node_modules/karma/bin/bower install && ./node_modules/karma/bin/karma start --single-run --browsers PhantomJS
+script: ./grailsw refresh-dependencies && ./grailsw test-app && karma start --single-run --browsers PhantomJS
