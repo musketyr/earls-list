@@ -15,7 +15,7 @@
 					<h1 class="col-md-12">Earl's List</h1>
 
 					<form ng-submit="addItem()" class="col-md-12 form">
-						<div class="alert alert-danger" ng-repeat="error in errors" id="errors">
+						<div class="alert alert-danger" ng-repeat="error in errors">
 							<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 							{{error.message}}
 						</div>
@@ -23,7 +23,7 @@
 					</form>
 					<h2 ng-repeat="item in items" class="col-md-12 item">
 						<span class="glyphicon" ng-click="toggle(item)" ng-class="{'glyphicon-unchecked': !item.crossed, 'glyphicon-check': item.crossed, 'text-muted': item.crossed}"></span>
-						<span ng-class="{crossed: item.crossed, 'text-muted': item.crossed}" ng-click="toggle(item)">{{item.description}}</span>
+						<span class="item-description" ng-class="{crossed: item.crossed, 'text-muted': item.crossed}" ng-click="toggle(item)">{{item.description}}</span>
 						<span class="remove-item text-muted pull-right glyphicon glyphicon-trash" ng-click="remove(item)"></span>
 					</h2>
 				</div>

@@ -7,7 +7,7 @@ module.exports = function(config) {
         browsers: [
             // for CI
             // 'PhantomJS',
-            'Chrome'
+            'Firefox'
         ],
         reporters: ['progress', 'junit'],
         // set true for CI
@@ -40,7 +40,7 @@ module.exports = function(config) {
 
         plugins: [
             'karma-jasmine',
-            'karma-chrome-launcher',
+            // 'karma-chrome-launcher',
             // for CI
             // 'karma-phantomjs-launcher',
             'karma-junit-reporter'
