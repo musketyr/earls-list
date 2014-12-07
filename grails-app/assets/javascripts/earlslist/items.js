@@ -1,4 +1,4 @@
-angular.module('earlslist.items', ['earlslist.apiRoot']).factory('items', function($http, $q, apiRoot){
+angular.module('earlslist.items', ['earlslist.apiRoot']).factory('items', ['$http', '$q', 'apiRoot', function($http, $q, apiRoot){
 
     var items, unwrapOrReject, enhanceAll, enhanceItem;
 
@@ -62,4 +62,4 @@ angular.module('earlslist.items', ['earlslist.apiRoot']).factory('items', functi
     };
 
     return items;
-});
+}]);

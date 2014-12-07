@@ -1,6 +1,6 @@
 //= require items
 
-angular.module('earlslist.itemsCtrl', ['earlslist.items']).controller('earlslist.itemsCtrl', function($scope, items){
+angular.module('earlslist.itemsCtrl', ['earlslist.items']).controller('earlslist.itemsCtrl', ['$scope', 'items', function($scope, items){
     $scope.items = [];
     $scope.errors = [];
     $scope.loading = true;
@@ -44,4 +44,4 @@ angular.module('earlslist.itemsCtrl', ['earlslist.items']).controller('earlslist
           $scope.items.splice(index, 1);
       });
     };
-});
+}]);
