@@ -1,6 +1,8 @@
 //= require items
 
-angular.module('earlslist.itemsCtrl', ['earlslist.items']).controller('earlslist.itemsCtrl', ['$scope', 'items', function($scope, items){
+angular
+  .module('earlslist.itemsCtrl', ['earlslist.items'])
+  .controller('earlslist.itemsCtrl', ['$scope', 'items', function($scope, items){
     $scope.items = [];
     $scope.errors = [];
     $scope.loading = true;

@@ -15,7 +15,7 @@ class ItemControllerSpec extends IntegrationSpec {
 
     ItemController controller = new ItemController()
     // use ../project-name trick as you can be in target dir
-    JsonRecorder rec = JsonRecorder.create('../earls-list/test/js-fixtures/earlslist', 'item')
+    JsonRecorder rec = JsonRecorder.create('test/js-fixtures/earlslist', 'item')
 
     def setup() {
         17.times {
