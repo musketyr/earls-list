@@ -19,7 +19,7 @@
 							<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 							{{error.message}}
 						</div>
-						<input id="task" class="form-control input-lg" ng-model="newItemText" ng-disabled="loading" placeholder="write your next task here...">
+						<input id="task" class="form-control input-lg" ng-model="newItemText" ng-disabled="loading" placeholder="How did you upset the Karma?">
 					</form>
 					<h2 ng-repeat="item in items" class="col-md-12 item">
 						<span class="glyphicon" ng-click="toggle(item)" ng-class="{'glyphicon-unchecked': !item.crossed, 'glyphicon-check': item.crossed, 'text-muted': item.crossed}"></span>

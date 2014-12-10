@@ -1,6 +1,7 @@
 package org.example.todo
 
 import grails.test.spock.IntegrationSpec
+import org.modelcatalogue.json.JsonRecorder
 
 import javax.servlet.http.HttpServletResponse
 
@@ -14,7 +15,6 @@ import javax.servlet.http.HttpServletResponse
 class ItemControllerSpec extends IntegrationSpec {
 
     ItemController controller = new ItemController()
-    // use ../project-name trick as you can be in target dir
     JsonRecorder rec = JsonRecorder.create('test/js-fixtures/earlslist', 'item')
 
     def setup() {
@@ -62,7 +62,6 @@ class ItemControllerSpec extends IntegrationSpec {
         result
         result.errors
         result.errors.any { it.field == 'description' }
-
     }
 
     void "update existing item"() {

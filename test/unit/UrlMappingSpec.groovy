@@ -6,23 +6,21 @@ import org.codehaus.groovy.grails.web.mapping.UrlMappingsHolder
 import org.example.todo.ItemController
 import spock.lang.Specification
 
-@TestFor(UrlMappings)
-// you have to mock all controllers you want to test
-@Mock(ItemController)
+@TestFor(UrlMappings) @Mock(ItemController)
 class UrlMappingSpec extends Specification {
 
-    /**
-     * Test all the REST endpoints if they are really exists and forwards to the right controllers and actions.
-     */
     void "test item rest endpoints ready"() {
         expect:
-        assertRestForwardUrlMapping(method, url, controller: "item", action: action, paramsToCheck)
+        assertRestForwardUrlMapping(method, url,
+                controller: "item",
+                action: action, paramsToCheck)
+
         where:
-        method      | action             | url                                                  | paramsToCheck
-        "GET"       | "index"            | "/item/"                                             | {}
-        "POST"      | "save"             | "/item/"                                             | {}
-        "PUT"       | "update"           | "/item/1"                                            | { id = "1" }
-        "DELETE"    | "delete"           | "/item/1"                                            | { id = "1" }
+        method      | action   | url       | paramsToCheck
+        "GET"       | "index"  | "/item/"  | {}
+        "POST"      | "save"   | "/item/"  | {}
+        "PUT"       | "update" | "/item/1" | { id = "1" }
+        "DELETE"    | "delete" | "/item/1" | { id = "1" }
     }
 
     /**
