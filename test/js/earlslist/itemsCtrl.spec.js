@@ -4,7 +4,7 @@ describe('Controller should provide uselful methods for the template', function 
     beforeEach(module('earlslist.itemsCtrl'));
 
     beforeEach(inject(function ($rootScope, $controller, _items_, $q) {
-        var listCallCounter = 0, saveOrUpdateFunction;
+        var saveOrUpdateFunction;
 
         items = _items_;
 
@@ -25,12 +25,10 @@ describe('Controller should provide uselful methods for the template', function 
             return $q.when({status: 204});
         });
         spyOn(items, 'list').and.callFake(function () {
-            listCallCounter++;
-
-            if (listCallCounter == 1) {
+            if (!$scope.items || $scope.items.length == 0) {
                 return $q.when(items.enhance.list(angular.copy(fixtures.item.list)));
             }
-            if (listCallCounter == 2) {
+            if ($scope.items && $scope.items.length == 10) {
                 return $q.when(items.enhance.list(angular.copy(fixtures.item.list).slice(0, 3)));
             }
             return $q.when([]);
@@ -112,5 +110,14 @@ describe('Controller should provide uselful methods for the template', function 
 
         expect($scope.items.length).toBe(12);
     });
+
+    it('should render 13 items', inject(function($templateCache, $compile) {
+        var element = $compile($templateCache.get('earlslist/items.html'))($scope);
+
+        $scope.$digest();
+
+        expect(element.find('.item').length).toBe(13);
+
+    }));
 
 });
