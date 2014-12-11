@@ -21,12 +21,4 @@ class ItemController extends RestfulController<Item> {
         super(Item)
     }
 
-    /**
-     * This simplification makes the tests and code easier as we only accept JSON requests.
-     * @return request.JSON
-     */
-    @Override
-    protected Object getObjectToBind() {
-        request.JSON
-    }
 }
