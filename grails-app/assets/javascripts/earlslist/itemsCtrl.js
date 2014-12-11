@@ -48,6 +48,7 @@ angular
     };
   }])
     // don' use this in your code, write the following snippet in CoffeeScript which supports multiline strings
+    // you can also use karma html2js plugin
   .run(['$templateCache', function($templateCache){
         $templateCache.put('earlslist/items.html',
             '<div class="row" ng-controller="earlslist.itemsCtrl">' +
